@@ -33,4 +33,15 @@ agent any
 			}
 		}
 	}
+	post{
+		always{
+			echo 'successful'
+		}
+		success{
+			echo 'success'
+		}
+		failure{
+			echo 'failed'
+		}
+	}
 }
