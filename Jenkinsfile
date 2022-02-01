@@ -24,7 +24,8 @@ agent any
 	stages{
 		stage('Build'){
 			steps{
-				//sh 'maven --version'
+				sh 'maven --version'
+				sh 'docker version'
 				echo "build"
 				echo "PATH - $PATH"
 				echo "BUILD_NUMBER - $env.BUILD_NUMBER"
