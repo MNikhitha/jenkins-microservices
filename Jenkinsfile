@@ -22,7 +22,7 @@ agent any
 
 	}
 	stages{
-		stage('Build'){
+		stage('Checkout'){
 			steps{
 				sh 'maven --version'
 				sh 'docker version'
@@ -36,17 +36,23 @@ agent any
 
 			}
 		}
-		stage('Deploy'){
+		stage('Compile'){
 			steps{
-				echo "Deploy"
+				sh 'mvn clean compile'
 
 			}
 		}
 		stage('Test'){
 			steps{
-				echo "test"
-
+				sh "mvn test"
 			}
+			
+		}
+		stage('Integration test'){
+			steps{
+				sh "mvn failsafe:integration-test  failsafe:verify"
+			}
+
 		}
 	}
 	//changed,unstable
