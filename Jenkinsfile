@@ -54,6 +54,32 @@ agent any
 			}
 
 		}
+		stage('package'){
+			steps{
+				sh "mvn package -DskipTests"
+			}
+
+		}
+		stage('Build docker image'){
+			steps{
+                //"docker build -t nikhi28/jenkins-microservices-pipeline:$env.BUILD_TAG"
+		        script{
+					dockerImage=docker.build("nikhi28/jenkins-microservices-pipeline:${env.BUILD_TAG}")
+				}
+			}
+		
+		}
+		stage('Push docker image'){
+			steps{
+				script{
+					docker.withRegistry('','dockerhubcre'){
+						dockerImage.push();
+						dockerImage.push('latest')
+					}
+				}
+				
+			}
+		}
 	}
 	//changed,unstable
 	post{
